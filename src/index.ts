@@ -89,7 +89,7 @@ export async function writeThumbnails(filePath: string, outDir: string, options:
         // convert sample.pdf[0] -thumbnail x300 -background white -alpha remove -quality 100 -scene 1 out/%d.jpg
         // convert sample.pdf[1] -thumbnail x300 -background white -alpha remove -quality 100 -scene 2 out/%d.jpg
         // ...
-        im.convert([
+        const param = [
           `${filePath}[${i}]`,
           '-thumbnail',
           `${options.width}x${options.width}`,
@@ -102,7 +102,10 @@ export async function writeThumbnails(filePath: string, outDir: string, options:
           '-scene',
           i+1,
           `${outDir.replace(/\/$/, '')}/${basename}_%d.${options.format}`
-        ], (err: any) => {
+        ];
+        console.log('specified page', param);
+
+        im.convert(param, (err: any) => {
           if (err)
             return void rej(err);
           rslv();
@@ -113,7 +116,7 @@ export async function writeThumbnails(filePath: string, outDir: string, options:
     // Thumbnails of all pages.
     return new Promise((rslv, rej) => {
       // convert sample.pdf -thumbnail x300 -background white -alpha remove -quality 100 -scene 1 out/%d.jpg
-      im.convert([
+      const param = [
         filePath,
         '-thumbnail',
         `${options.width}x${options.width}`,
@@ -126,7 +129,11 @@ export async function writeThumbnails(filePath: string, outDir: string, options:
         '-scene',
         '1',
         `${outDir.replace(/\/$/, '')}/${basename}_%d.${options.format}`
-      ], (err: any) => {
+      ];
+
+      console.log('all pages', param);
+      
+      im.convert(param, (err: any) => {
         if (err)
           return void rej(err);
         rslv();
