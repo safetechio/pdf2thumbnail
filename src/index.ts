@@ -91,7 +91,7 @@ export async function writeThumbnails(filePath: string, outDir: string, options:
         // ...
         im.convert([
           `${filePath}[${i}]`,
-          '-thumbnail',
+          '-resize',
           `x${options.width}`,
           '-background',
           'white',
@@ -115,7 +115,7 @@ export async function writeThumbnails(filePath: string, outDir: string, options:
       // convert sample.pdf -thumbnail x300 -background white -alpha remove -quality 100 -scene 1 out/%d.jpg
       im.convert([
         filePath,
-        '-thumbnail',
+        '-resize',
         `x${options.width}`,
         '-background',
         'white',
